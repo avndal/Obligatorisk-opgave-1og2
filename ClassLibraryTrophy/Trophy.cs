@@ -7,7 +7,7 @@
 
     public override string ToString()
     {
-        return $"Id = {Id} Competition = {Competition} Year = {Year}";
+        return $"{Id} + {Competition} + {Year}";
     }
 
     
