@@ -1,5 +1,6 @@
 ﻿
 using System.ComponentModel;
+using System.ComponentModel.Design;
 
 public class TrophiesRepository : Trophy
 {
@@ -19,7 +20,7 @@ public class TrophiesRepository : Trophy
 
 
 
-    public void Get(int? yearAfter = null, string? includes = null, string? orderby = null)
+    public IEnumerable<Trophy> Get(int? yearAfter = null, string? includes = null, string? orderby = null)
     {
         IEnumerable<Trophy> trophies = _trophies;
         //Filtering
@@ -38,42 +39,51 @@ public class TrophiesRepository : Trophy
                     trophies = trophies.OrderBy(t => t.Year); break;
                 case "Competition in order":
                     trophies = trophies.OrderBy(t => t.Competition); break;
-
             }
         }
         return trophies;
     }
 
-
-
-
-
-    public int? GetById(int id)
+    public Trophy? GetById(int id)
     {
-        if (id == null)
-        { return null; }
-        if (_trophies.FirstOrDefault<>(t => t.id == id))
-        { return null; }
-        throw new ArgumentException("could not find an object with maching id");
+        if (id == 0) return null;
+
+        return _trophies.Find(t => t.Id == id);
+        //else return null
+
+        //Mangler Exeption
     }
 
-    public Trophy Add(int id)
+
+    public Trophy Add(Trophy trophy)
     {
-        Trophy trophyExample = new Trophy() { Id = id };
-        _trophies.Add(trophyExample);
-        return trophyExample;
+        trophy.ValidateYear();
+        trophy.Id = _nextId++;
+        _trophies.Add(trophy);
+        return trophy;
     }
 
     public Trophy Remove(int id)
     {
-        if (id == null)
-        { return null}
-        if (id == null)
+        Trophy? trophy = GetById(id);
+        if (trophy == null)
         {
-            _trophies.Remove(_trophies)
-            }
-
-
-
-
+            return null;
+        }
+        _trophies.Remove(trophy);
+        return trophy;
     }
+
+    public Trophy? Update(int id, Trophy values)
+    {
+        values.ValidateYear();
+        Trophy? existingTrophy = GetById(id);
+        if (existingTrophy == null)
+        {
+            return null;
+        }
+        existingTrophy.Competition = values.Competition;
+        existingTrophy.Year = values.Year;
+        return existingTrophy;
+    }
+}
