@@ -15,6 +15,7 @@ namespace Tests
         private readonly Trophy _nullTitle = new Trophy() { Id = 2, Year = 1992 };
         private readonly Trophy _emptyTitle = new Trophy() { Id = 3, Competition = "", Year = 1992 };
         private readonly Trophy _yearLow = new Trophy() { Id = 4, Competition = "Football", Year = 1969 };
+        private readonly Trophy _yearHigh = new Trophy() { Id = 4, Competition = "Football", Year = 2025 };
 
 
 
@@ -24,9 +25,10 @@ namespace Tests
         {
 
             //Act 
-
+            string result = _trophy.ToString();
+            
             //Assert
-            Assert.AreEqual("1 + Football + 1992", _trophy.ToString());
+            Assert.AreEqual("1 + Football + 1992", result);
 
         }
 
@@ -46,8 +48,10 @@ namespace Tests
             //Act 
 
             //Assert
-        Assert.ThrowsException<ArgumentOutOfRangeException>(()=> _yearLow.ValidateYear());
-        
+            Assert.ThrowsException<ArgumentOutOfRangeException>(()=> _yearLow.ValidateYear());
+            Assert.ThrowsException<ArgumentOutOfRangeException>(()=> _yearHigh.ValidateYear());
+
+
         }
 
     }

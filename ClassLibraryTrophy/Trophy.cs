@@ -27,7 +27,7 @@
 
     public void ValidateYear()
     {
-        if (Year <= 1970 || Year >= 2024)
+        if (Year < 1970 || Year > 2024)
         {
             throw new ArgumentOutOfRangeException("Please select a number in range");
         }

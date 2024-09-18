@@ -35,9 +35,9 @@ public class TrophiesRepository : Trophy
             orderby = orderby.ToLower();
             switch (orderby)
             {
-                case "Year in order":
+                case "year":
                     trophies = trophies.OrderBy(t => t.Year); break;
-                case "Competition in order":
+                case "competition":
                     trophies = trophies.OrderBy(t => t.Competition); break;
             }
         }
