@@ -24,8 +24,8 @@ namespace Tests
             _repo.Add(new Trophy {  Competition = "", Year = 1993 });
             _repo.Add(new Trophy { Competition = "Basketball", Year = 1970 });
             _repo.Add(new Trophy { Competition = "Hockey", Year = 2022});
-        }
 
+        }
 
    
 
@@ -40,6 +40,13 @@ namespace Tests
 
 
             //Act
+            var result = _repo.Get(yearAfter: 2020);
+           
+            //Assert
+            Assert.AreEqual(1, result.Count());
+
+
+            //Act
             IEnumerable<Trophy> sortedTropies = _repo.Get(orderby: "year");
 
             //Assert
@@ -50,7 +57,7 @@ namespace Tests
             IEnumerable<Trophy> sortedTropies2 = _repo.Get(orderby: "competition");
             
             //Assert
-            Assert.AreEqual("Basketball", sortedTropies.First().Competition);
+            Assert.AreEqual("", sortedTropies2.First().Competition);
         }
 
         [TestMethod()]

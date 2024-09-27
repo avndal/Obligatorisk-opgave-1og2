@@ -46,12 +46,10 @@ public class TrophiesRepository : Trophy
 
     public Trophy? GetById(int id)
     {
-        if (id == 0) return null;
 
-        return _trophies.Find(t => t.Id == id);
-        //else return null
+        return _trophies.FirstOrDefault(t => t.Id == id);
 
-        //Mangler Exeption
+       
     }
 
 
